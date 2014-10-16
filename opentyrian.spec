@@ -1,6 +1,6 @@
 Name:		opentyrian
 Version:	2.1
-Release:	2
+Release:	3
 Summary:	Classic shoot-em-up arcade port
 License:	GPLv2
 Group:		Games/Arcade
