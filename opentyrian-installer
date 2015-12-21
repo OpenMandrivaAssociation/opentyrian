@@ -1,0 +1,36 @@
+#!/bin/sh
+DIALOG=Xdialog
+TYRIANPACK=tyrian21.zip
+TYRIANURL="http://sites.google.com/a/camanis.net/opentyrian/tyrian/$TYRIANPACK"
+DL_PATH="$HOME/.opentyrian/content_download"
+download_content() {
+    $DIALOG --screen-center --wrap --title "Download and Install Tyrian content" \
+    	--yesno "For start of game OpenTyrian it is necessary to load from a Internet 4.7Mb \n with the original data from Tyrian. Download ?" 0 0
+
+    case $? in
+	 0)
+	    [ -d $DL_PATH ] || mkdir -p $DL_PATH
+	    eval "curl -L -# $TYRIANURL -o $DL_PATH/$TYRIANPACK" 2>&1 | tr "\r" "\n"|sed "s,# *,,gm"| $DIALOG --title "Progress" --no-close \
+	    --gauge "Downloading ...\n\n" 0 0
+	    pushd $DL_PATH
+	    if unzip -j -o -d $DL_PATH "$TYRIANPACK";then
+		$DIALOG --screen-center --wrap --title "Download and Install Tyrian content" \
+    	        --yesno "Complete. Start Game ?" 0 0
+    	        [ $? -eq 0 ] || exit
+    	    else
+		$DIALOG --screen-center --wrap --title "Download and Install Tyrian content" \
+    	        --msgbox "Unknown error !" 0 0
+    	    fi
+	    popd
+	    ;;
+	*)
+	    exit
+	    ;;
+    esac
+}
+
+if [ -e "$DL_PATH/palette.dat" ];then
+    opentyrian -t $DL_PATH $*
+else
+    download_content && rm -f "$DL_PATH/$TYRIANPACK" && opentyrian -t $DL_PATH $*
+fi
