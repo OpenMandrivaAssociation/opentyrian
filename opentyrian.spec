@@ -8,14 +8,15 @@ License:	GPLv2
 Group:		Games/Arcade
 Url:		https://github.com/opentyrian/opentyrian
 Source:		https://github.com/opentyrian/opentyrian/archive/refs/tags/v%{version}.tar.gz
+Source3:	https://camanis.net/tyrian/tyrian21.zip
 # script to download game data
 # Google doesn't allow easy direct downloads so use MIB hosting
-Source1:	%{name}-installer
+#Source1:	%{name}-installer
 Source2:	%{name}.png
-BuildRequires:	pkgconfig(sdl)
-BuildRequires:	pkgconfig(SDL_net)
-Requires:	unzip
-Requires:	Xdialog
+BuildRequires:	pkgconfig(sdl2)
+BuildRequires:	pkgconfig(SDL2_net)
+BuildRequires:	unzip
+#Requires:	Xdialog
 
 %description
 OpenTyrian is a port of the DOS shoot-em-up Tyrian.
@@ -34,7 +35,6 @@ to fight Microsol and save the galaxy.
 
 %install
 %__install -Dpm 755 %{name} %{buildroot}%{_bindir}/%{name}
-%__install -Dpm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}-installer
 
 %__mkdir_p %{buildroot}%{_datadir}/pixmaps
 %__install -m644 %{SOURCE2} %{buildroot}%{_datadir}/pixmaps/%{name}.png
@@ -51,10 +51,15 @@ Terminal=false
 Categories=Game;ArcadeGame;
 EOF
 
+mkdir -p %{buildroot}%{_datadir}/games/tyrian
+cd %{buildroot}%{_datadir}/games/tyrian
+tar x --strip-components=1 -f %{S:3}
+chmod 0755 %{buildroot}%{_datadir}/games/tyrian
+chmod 0644 %{buildroot}%{_datadir}/games/tyrian/*
+
 %files
 %doc COPYING README NEWS
 %{_bindir}/*
 %{_datadir}/pixmaps/%{name}.png
 %{_datadir}/applications/mandriva-%{name}.desktop
-
-
+%{_datadir}/games/tyrian
