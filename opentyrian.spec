@@ -1,13 +1,13 @@
 %define debug_package %{nil}
 
 Name:		opentyrian
-Version:	2.1.20130907
+Version:	2.1.20221123
 Release:	1
 Summary:	Classic shoot-em-up arcade port
 License:	GPLv2
 Group:		Games/Arcade
-Url:		https://bitbucket.org/opentyrian/opentyrian/
-Source:		http://www.camanis.net/opentyrian/releases/%{name}-%{version}-src.tar.gz
+Url:		https://github.com/opentyrian/opentyrian
+Source:		https://github.com/opentyrian/opentyrian/archive/refs/tags/v%{version}.tar.gz
 # script to download game data
 # Google doesn't allow easy direct downloads so use MIB hosting
 Source1:	%{name}-installer
@@ -27,10 +27,10 @@ in 20,031 where you play as Trent Hawkins, a skilled fighter-pilot employed
 to fight Microsol and save the galaxy.
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
-%make release
+%make_build prefix=%{_prefix}
 
 %install
 %__install -Dpm 755 %{name} %{buildroot}%{_bindir}/%{name}
@@ -52,7 +52,7 @@ Categories=Game;ArcadeGame;
 EOF
 
 %files
-%doc COPYING README CREDITS NEWS
+%doc COPYING README NEWS
 %{_bindir}/*
 %{_datadir}/pixmaps/%{name}.png
 %{_datadir}/applications/mandriva-%{name}.desktop

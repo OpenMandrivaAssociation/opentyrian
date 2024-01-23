@@ -1,7 +1,7 @@
 #!/bin/sh
 DIALOG=Xdialog
 TYRIANPACK=tyrian21.zip
-TYRIANURL="http://sites.google.com/a/camanis.net/opentyrian/tyrian/$TYRIANPACK"
+TYRIANURL="https://camanis.net/tyrian/$TYRIANPACK"
 DL_PATH="$HOME/.opentyrian/content_download"
 download_content() {
     $DIALOG --screen-center --wrap --title "Download and Install Tyrian content" \
