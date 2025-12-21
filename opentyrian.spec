@@ -13,6 +13,7 @@ Source3:	https://camanis.net/tyrian/tyrian21.zip
 # Google doesn't allow easy direct downloads so use MIB hosting
 #Source1:	%{name}-installer
 Source2:	%{name}.png
+BuildRequires:	make
 BuildRequires:	pkgconfig(sdl2)
 BuildRequires:	pkgconfig(SDL2_net)
 BuildRequires:	unzip
